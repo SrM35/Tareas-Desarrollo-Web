@@ -22,13 +22,6 @@ const AddEditForm = ({ onSubmit, loading,}: AddEditFormProps) => {
         setFormState(formDefaultValue);
     };
 
-    // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, key: keyof User) => {
-    //     setFormState({
-    //         ...formState,
-    //         [key]: event.target.value,
-    //     })
-    // };
-
     const handleInputChange = (key: keyof User) => {
         return (event: React.ChangeEvent<HTMLInputElement>) => {
             setFormState({
@@ -62,7 +55,6 @@ const AddEditForm = ({ onSubmit, loading,}: AddEditFormProps) => {
                 {
                     loading ? 'Guardando...' : 'Guardar'
                 }
-                Guardar
             </button>
         </form>
     );

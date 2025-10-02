@@ -23,7 +23,7 @@ function App() {
   };
   return (
     <div>
-      <h1>Todo list</h1>
+      <h1>Bienvenido</h1>
       <AddEditForm onSubmit={handleOnSubmit} loading={isSubmitLoading} />
       {isFetchingUsers && <p>Loading...</p>}
       {!isFetchingUsers && (
