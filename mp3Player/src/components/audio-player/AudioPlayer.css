@@ -5,25 +5,41 @@
   justify-content: flex-end;
 }
 
+.file-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
 .audio-player .play-pause {
-  text-align: center;
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   background-color: #000000;
   color: #ffffff;
-  font-size: 40px;
+  font-size: 15px;
   cursor: pointer;
+  border-radius: 50%;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+}
+
+.progress-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
 }
 
 #progress {
   -webkit-appearance: none;
-  width: 100%;
+  width: 75%;
   height: 6px;
   background: #dddddd;
   border-radius: 4px;
-  cursor: pointer ;
+  cursor: pointer;
   margin: 40px 0;
-  
 }
 
 #progress::-webkit-slider-thumb {
@@ -33,5 +49,125 @@
   height: 15px;
   border-radius: 50%;
   border: 1px solid #000000;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+#volume {
+  -webkit-appearance: none;
+  width: 91%;
+  height: 6px;
+  background: #dddddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: #ff9500;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid #000000;
+}
+
+.volume-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.controls-area .controls {
+  align-items: center;
+}
+
+.everything {
+  margin-top: auto;
+}
+
+.Songs {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  max-height: 400px;
+}
+
+.Songs::-webkit-scrollbar {
+  width: 6px;
+}
+
+.Songs::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.Songs::-webkit-scrollbar-thumb {
+  background: rgba(255, 149, 0, 0.5);
+  border-radius: 10px;
+}
+
+.Songs::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 149, 0, 0.7);
+}
+
+.Songs ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.Songs li {
+  width: 100%;
+}
+
+.Songs button {
+  width: 100%;
+  text-align: left;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.Songs button::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: #ff9500;
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.Songs button:hover::before {
+  transform: scaleY(1);
+}
+
+.Songs button:hover {
+  background: rgba(255, 149, 0, 0.15);
+  border-color: rgba(255, 149, 0, 0.5);
+  transform: translateX(4px);
+  box-shadow: 0 4px 16px rgba(255, 149, 0, 0.2);
+}
+
+.Songs button.active {
+  font-weight: bold;
+  color: #ff9500;
+}
+
+.Songs button.active::after {
+  content: "     ♫";
 }
