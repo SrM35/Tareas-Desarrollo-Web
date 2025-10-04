@@ -1,0 +1,37 @@
+.audio-player {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.audio-player .play-pause {
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+#progress {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #dddddd;
+  border-radius: 4px;
+  cursor: pointer ;
+  margin: 40px 0;
+  
+}
+
+#progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: #ff9500;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
