@@ -90,6 +90,8 @@
 }
 
 .Songs {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   flex: 1;
   overflow-y: auto;
   padding-right: 0.5rem;

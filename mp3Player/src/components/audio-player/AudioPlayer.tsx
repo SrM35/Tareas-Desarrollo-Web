@@ -123,6 +123,7 @@ const AudioPlayer = () => {
 
     return (
         <div className="audio-player">
+            <h1>DASC UABCS - MP3 Player</h1>
             <div className="Songs">
                 <ul>
                     {songs.map((song, index) => (
