@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { MdPlayArrow, MdPause, MdSkipNext, MdSkipPrevious, MdVolumeUp } from "react-icons/md";
 import "./AudioPlayer.css";
 
 interface Song {
@@ -7,10 +8,13 @@ interface Song {
 }
 
 const songs: Song[] = [
-    { name: "24 Candles", src: "../24 Candles.mp3" },
-    { name: "EVERYBODY", src: "../EVERYBODY.mp3" },
-    { name: "Big Poe", src: "../Big Poe.mp3" },
-    { name: "si preguntas por mi", src: "../si preguntas por mi.mp3" },
+    { name: "24 Candles - Kanye West", src: "../24 Candles.mp3" },
+    { name: "EVERYBODY - Kanye West, Ty Dolla $ign", src: "../EVERYBODY.mp3" },
+    { name: "Big Poe - Tyler, The Creator", src: "../Big Poe.mp3" },
+    { name: "si preguntas por mi - Tainy", src: "../si preguntas por mi.mp3" },
+    { name: "Radio Tune - GdoS", src: "../Radio Tune.mp3" },
+    { name: "BULLETPROOF - Ye", src: "../BULLETPROOF.mp3" },
+    { name: "Tiramisu - Don Toliver", src: "../Tiramisu.mp3" },
 ];
 
 const formatTime = (time: number) => {
@@ -24,8 +28,8 @@ const AudioPlayer = () => {
     const [fileName, setFileName] = useState<string>("");
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
-    const [currentIndex, setCurrentIndex] = useState<number>(0);
-    const currentSong = songs[currentIndex];
+    const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+    const currentSong = currentIndex !== null ? songs[currentIndex] : null;
     const [currentTime, setCurrentTime] = useState<number>(0);
     const [duration, setDuration] = useState<number>(0);
     const [volume, setVolume] = useState<number>(1);
@@ -107,19 +111,53 @@ const AudioPlayer = () => {
     function changeSong(index: number): void {
         if (index < 0) index = songs.length - 1;
         if (index >= songs.length) index = 0;
-        setCurrentIndex(index);
 
-        if (audioRef.current) {
-            audioRef.current.src = songs[index].src;
-            audioRef.current.currentTime = 0;
-            audioRef.current.play();
-            setIsPlaying(true);
-        }
+        setCurrentIndex(index);
     }
 
 
-    const playNext = () => changeSong(currentIndex + 1);
-    const playPrev = () => changeSong(currentIndex - 1);
+    useEffect(() => {
+        if (!audioRef.current || !currentSong) return;
+
+        audioRef.current.src = currentSong.src;
+        audioRef.current.currentTime = 0;
+
+        audioRef.current.play();
+        setIsPlaying(true);
+
+    }, [currentSong]);
+
+
+    useEffect(() => {
+        if (!audioRef.current) return;
+        const audio = audioRef.current;
+
+        const handleEnded = () => {
+            playNext();
+        };
+
+        audio.addEventListener("ended", handleEnded);
+
+        return () => {
+            audio.removeEventListener("ended", handleEnded);
+        };
+    }, [currentSong]);
+
+    const playNext = () => {
+        if (currentIndex === null) {
+            setCurrentIndex(0);
+            return;
+        }
+        changeSong(currentIndex + 1);
+    };
+
+    const playPrev = () => {
+        if (currentIndex === null) {
+            setCurrentIndex(songs.length - 1);
+            return;
+        }
+        changeSong(currentIndex - 1);
+    };
 
     return (
         <div className="audio-player">
@@ -140,12 +178,13 @@ const AudioPlayer = () => {
             </div>
 
 
-            <audio ref={audioRef} src={currentSong.src}></audio>
+            <audio ref={audioRef} src={currentSong ? currentSong.src : ""}></audio>
 
             <div className="controls-area">
                 <p className="file-name">{fileName}</p>
                 <div className="volume-control">
-                    <span>🔊</span>
+                    <span><MdVolumeUp size={24} /></span>
+
                     <input
                         type="range"
                         min="0"
@@ -160,16 +199,20 @@ const AudioPlayer = () => {
                 </div>
 
             </div>
+            <div className="controls">
+                <button onClick={playPrev}>
+                    <MdSkipPrevious size={30} />
+                </button>
+                <button onClick={handlePlayPause} className="play-pause">
+                    {isPlaying ? <MdPause size={30} /> : <MdPlayArrow size={30} />}
+                </button>
+                <button onClick={playNext}>
+                    <MdSkipNext size={30} />
+                </button>
+            </div>
 
             <div className="progress-area">
 
-                <div className="controls">
-                    <button onClick={playPrev}>⏮</button>
-                    <button onClick={handlePlayPause} className="play-pause">
-                        {isPlaying ? "⏸" : "▶"}
-                    </button>
-                    <button onClick={playNext}>⏭</button>
-                </div>
 
                 <input
                     type="range"
@@ -181,8 +224,8 @@ const AudioPlayer = () => {
                     style={{
                         background: `linear-gradient(to right, #ff9500 ${progress}%, #d3d3d3 ${progress}%)`
                     }}
-                    />
-                    <span>{formatTime(currentTime)} / {formatTime(duration)}</span>
+                />
+                <span>{formatTime(currentTime)} / {formatTime(duration)}</span>
             </div>
 
 
