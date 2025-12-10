@@ -159,6 +159,10 @@ const AudioPlayer = () => {
         changeSong(currentIndex - 1);
     };
 
+    const aa = () => {
+        // console.log("hola");
+    };
+
     return (
         <div className="audio-player">
             <h1>DASC UABCS - MP3 Player</h1>
@@ -199,6 +203,9 @@ const AudioPlayer = () => {
                 </div>
 
             </div>
+
+            <div className="progress-area">
+
             <div className="controls">
                 <button onClick={playPrev}>
                     <MdSkipPrevious size={30} />
@@ -210,9 +217,6 @@ const AudioPlayer = () => {
                     <MdSkipNext size={30} />
                 </button>
             </div>
-
-            <div className="progress-area">
-
 
                 <input
                     type="range"

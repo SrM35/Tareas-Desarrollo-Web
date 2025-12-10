@@ -35,7 +35,7 @@
 
 #progress {
   -webkit-appearance: none;
-  width: 90%;
+  width: 75%;
   height: 6px;
   background: #dddddd;
   border-radius: 4px;
