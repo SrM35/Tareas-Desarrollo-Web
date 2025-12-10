@@ -159,10 +159,6 @@ const AudioPlayer = () => {
         changeSong(currentIndex - 1);
     };
 
-    const aa = () => {
-        // console.log("hola");
-    };
-
     return (
         <div className="audio-player">
             <h1>DASC UABCS - MP3 Player</h1>
